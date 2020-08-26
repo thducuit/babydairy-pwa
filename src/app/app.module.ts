@@ -9,9 +9,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 
+import {InfoTodayComponent} from "./Screens/info-today/info-today.component";
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+
+    InfoTodayComponent
   ],
   imports: [
     BrowserModule,
