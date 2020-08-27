@@ -9,7 +9,32 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .main {
-    /*width: 500px;*/
-    /*margin: 0 auto;*/
     background: #fff;
+}
+
+.flex-container {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+
+    -ms-box-orient: horizontal;
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -moz-flex;
+    display: -webkit-flex;
+    display: flex;
+}
+
+.row-reverse    {
+    -webkit-flex-direction: row-reverse;
+    flex-direction: row-reverse;
+}
+
+.mat-card-info {
+    margin: 15px;
+}
+
+.bottle-icon {
+    max-width: 35px;
 }

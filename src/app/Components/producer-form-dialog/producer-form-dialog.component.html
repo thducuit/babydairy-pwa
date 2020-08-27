@@ -1,0 +1,18 @@
+<h1 mat-dialog-title>Tạo bình sữa nào</h1>
+<div mat-dialog-content>
+    <label id="capacity-radio-group-label">Thu hoạch sao nhỉ?</label>
+    <mat-radio-group
+            aria-labelledby="capacity-radio-group-label"
+            class="capacity-radio-group"
+            [(ngModel)]="data.capacity">
+        <mat-radio-button class="capacity-radio-button" *ngFor="let cap of capacityOptions" [value]="cap">
+            {{cap}} ml
+        </mat-radio-button>
+    </mat-radio-group>
+</div>
+<div mat-dialog-actions>
+    <div class="flex-container row-reverse">
+        <button mat-button [mat-dialog-close]="data" (click)="update()">Cập nhật</button>
+    </div>
+
+</div>

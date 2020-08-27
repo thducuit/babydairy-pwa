@@ -1,1 +1,37 @@
-<p>producer works!</p>
+<mat-card class="mat-card-info">
+    <mat-card-header>
+        <mat-card-title>26/08/2020</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-selection-list #producers [multiple]="false">
+            <mat-list-option (click)="updateDialog(1)" [value]="1">
+                <img matListAvatar src="../../../assets/b3.png" alt="">
+                <h3 matLine> 07:00 </h3>
+                <p matLine>
+                    <span> 120ml </span>
+                </p>
+                <mat-divider [inset]="true"></mat-divider>
+            </mat-list-option>
+            <mat-list-option>
+                <img matListAvatar src="../../../assets/b3.png" alt="">
+                <h3 matLine> 12:00 </h3>
+                <p matLine>
+                    <span> 80ml </span>
+                </p>
+                <mat-divider [inset]="true"></mat-divider>
+            </mat-list-option>
+            <mat-list-option>
+                <img matListAvatar src="../../../assets/b3.png" alt="">
+                <h3 matLine> 20:00 </h3>
+                <p matLine>
+                    <span> 120ml </span>
+                </p>
+            </mat-list-option>
+        </mat-selection-list>
+    </mat-card-content>
+    <mat-card-actions>
+        <div class="flex-container row-reverse">
+            <button mat-button color="primary" (click)="openDialog()"> Bình mới </button>
+        </div>
+    </mat-card-actions>
+</mat-card>
