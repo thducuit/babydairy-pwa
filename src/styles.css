@@ -38,3 +38,38 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .bottle-icon {
     max-width: 35px;
 }
+
+.capacity-radio-group {
+    display: flex;
+    flex-direction: column;
+    margin: 15px 0;
+}
+
+.capacity-radio-button {
+    margin: 5px;
+}
+
+.caption-text {
+    text-align: center;
+    font-size: 12px;
+}
+
+.avatar-upload {
+    width: 250px;
+    height: 120px;
+    background: url("./assets/pngwave2.png") no-repeat center;
+    border: none;
+    outline: none;
+}
+
+.avatar-block {
+    position: relative;
+}
+
+.avatar-icon {
+    right: -10px;
+    bottom: 20px;
+    position: absolute;
+    z-index: 1;
+    color: #fff;
+}

@@ -1,0 +1,44 @@
+import {Component, OnInit} from '@angular/core';
+import {ChartOptions, ChartType, ChartDataSets} from 'chart.js';
+import * as pluginDataLabels from 'chartjs-plugin-datalabels';
+import {Label} from 'ng2-charts';
+
+@Component({
+    selector: 'app-weight-bar-chart-dialog',
+    templateUrl: './weight-bar-chart-dialog.component.html',
+    styleUrls: ['./weight-bar-chart-dialog.component.css']
+})
+export class WeightBarChartDialogComponent implements OnInit {
+
+    public barChartOptions: ChartOptions = {
+        responsive: true,
+        // We use these empty structures as placeholders for dynamic theming.
+        scales: {xAxes: [{}], yAxes: [{}]},
+        plugins: {
+            datalabels: {
+                anchor: 'end',
+                align: 'end',
+            }
+        }
+    };
+    public barChartLabels: Label[] = ['1', '2', '3', '4'];
+    public barChartType: ChartType = 'bar';
+    public barChartLegend = true;
+    public barChartPlugins = [pluginDataLabels];
+
+    public barChartData: ChartDataSets[] = [
+        {
+            backgroundColor: 'rgba(255, 99, 132, 0.6)',
+            barThickness: 10,
+            data: [3.3, 4.6, 5.7, 8],
+            label: 'kg'
+        }
+    ];
+
+    constructor() {
+    }
+
+    ngOnInit(): void {
+    }
+
+}

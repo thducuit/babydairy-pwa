@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>Avatar cho hôm này nào</h1>
+<div mat-dialog-content>
+    <input
+            style="display: none"
+            type="file" (change)="onFileChanged($event)"
+            #fileInput>
+    <button class="avatar-upload" (click)="fileInput.click()"></button>
+</div>
+<div mat-dialog-actions>
+    <div class="flex-container row-reverse">
+        <button mat-button class="mat-primary" (click)="update()">Cập nhật</button>
+    </div>
+</div>

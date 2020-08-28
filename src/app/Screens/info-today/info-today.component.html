@@ -4,7 +4,14 @@
         <mat-card-title>26/08/2020</mat-card-title>
         <mat-card-subtitle>04:00</mat-card-subtitle>
     </mat-card-header>
-    <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu" />
+
+    <div class="avatar-block">
+        <div class="avatar-icon" (click)="openDialog()">
+            <mat-icon aria-hidden="false" aria-label="upload avatar" color="red">camera_alt</mat-icon>
+        </div>
+        <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu" />
+    </div>
+
     <mat-card-content>
         <div>
             <img class="bottle-icon" src="../../../assets/b1.png" alt="" />
