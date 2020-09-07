@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {MatDialog} from "@angular/material/dialog";
-import {AvatarUploadDialogComponent} from "../../Components/avatar-upload-dialog/avatar-upload-dialog.component";
+import {MatDialog} from '@angular/material/dialog';
+import {AvatarUploadDialogComponent} from '../../Components/avatar-upload-dialog/avatar-upload-dialog.component';
 
 @Component({
     selector: 'app-info-today',

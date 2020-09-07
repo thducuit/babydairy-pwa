@@ -13,32 +13,35 @@ import {HttpClientModule} from '@angular/common/http';
 import {ServiceWorkerModule} from '@angular/service-worker';
 import {environment} from '../environments/environment';
 
-import {InfoTodayComponent} from "./Screens/info-today/info-today.component";
-import {ProducerComponent} from "./Screens/producer/producer.component";
+import {InfoTodayComponent} from './Screens/info-today/info-today.component';
+import {ProducerComponent} from './Screens/producer/producer.component';
 import {
     ProducerFormDialogComponent
-} from "./Components/producer-form-dialog/producer-form-dialog.component";
-import {ConsumerComponent} from "./Screens/consumer/consumer.component";
-import {ConsumerFormDialogComponent} from "./Components/consumer-form-dialog/consumer-form-dialog.component";
+} from './Components/producer-form-dialog/producer-form-dialog.component';
+import {ConsumerComponent} from './Screens/consumer/consumer.component';
+import {ConsumerFormDialogComponent} from './Components/consumer-form-dialog/consumer-form-dialog.component';
 
 import {ChartsModule} from 'ng2-charts';
-import {HeightBarChartDialogComponent} from "./Components/height-bar-chart-dialog/height-bar-chart-dialog.component";
-import {GeneralComponent} from "./Screens/general/general.component";
-import {WeightBarChartDialogComponent} from "./Components/weight-bar-chart-dialog/weight-bar-chart-dialog.component";
-import {AvatarUploadDialogComponent} from "./Components/avatar-upload-dialog/avatar-upload-dialog.component";
+import {HeightBarChartDialogComponent} from './Components/height-bar-chart-dialog/height-bar-chart-dialog.component';
+import {GeneralComponent} from './Screens/general/general.component';
+import {WeightBarChartDialogComponent} from './Components/weight-bar-chart-dialog/weight-bar-chart-dialog.component';
+import {AvatarUploadDialogComponent} from './Components/avatar-upload-dialog/avatar-upload-dialog.component';
+import {ConsumerService} from './Services/consumer.service';
+import {ProducerService} from './Services/producer.service';
+import {BabyinfoService} from './Services/babyinfo.service';
 
 @NgModule({
     declarations: [
         AppComponent,
 
-        //Components
+        // Components
         ProducerFormDialogComponent,
         ConsumerFormDialogComponent,
         HeightBarChartDialogComponent,
         WeightBarChartDialogComponent,
         AvatarUploadDialogComponent,
 
-        //Screens
+        // Screens
         InfoTodayComponent,
         ProducerComponent,
         ConsumerComponent,
@@ -55,7 +58,12 @@ import {AvatarUploadDialogComponent} from "./Components/avatar-upload-dialog/ava
         ChartsModule,
         ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
     ],
-    providers: [],
+    providers: [
+        // Services
+        ConsumerService,
+        ProducerService,
+        BabyinfoService
+    ],
     bootstrap: [AppComponent]
 })
 export class AppModule {

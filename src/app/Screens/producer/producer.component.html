@@ -1,32 +1,19 @@
 <mat-card class="mat-card-info">
     <mat-card-header>
-        <mat-card-title>26/08/2020</mat-card-title>
+        <mat-card-title>{{ today | date:'dd/MM/yyyy'}}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-        <mat-selection-list #producers [multiple]="false">
-            <mat-list-option (click)="updateDialog(1)" [value]="1">
+        <mat-selection-list #producer [multiple]="false">
+
+            <mat-list-option  *ngFor="let producer of producers" [value]="producer.id" (click)="updateDialog(producer)">
                 <img matListAvatar src="../../../assets/b3.png" alt="">
-                <h3 matLine> 07:00 </h3>
+                <h3 matLine> {{ producer.time }} </h3>
                 <p matLine>
-                    <span> 120ml </span>
+                    <span> {{ producer.capacity }}{{ producer.unit }} </span>
                 </p>
                 <mat-divider [inset]="true"></mat-divider>
             </mat-list-option>
-            <mat-list-option>
-                <img matListAvatar src="../../../assets/b3.png" alt="">
-                <h3 matLine> 12:00 </h3>
-                <p matLine>
-                    <span> 80ml </span>
-                </p>
-                <mat-divider [inset]="true"></mat-divider>
-            </mat-list-option>
-            <mat-list-option>
-                <img matListAvatar src="../../../assets/b3.png" alt="">
-                <h3 matLine> 20:00 </h3>
-                <p matLine>
-                    <span> 120ml </span>
-                </p>
-            </mat-list-option>
+
         </mat-selection-list>
     </mat-card-content>
     <mat-card-actions>

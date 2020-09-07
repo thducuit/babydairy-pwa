@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {ChartOptions, ChartType, ChartDataSets} from 'chart.js';
 import * as pluginDataLabels from 'chartjs-plugin-datalabels';
 import {Label} from 'ng2-charts';
@@ -10,9 +10,24 @@ import {Label} from 'ng2-charts';
 })
 export class WeightBarChartDialogComponent implements OnInit {
 
+    private BarChartLabels: Label[];
+
+    @Input() set chartLabels(value: Label[]) {
+        this.BarChartLabels = value;
+    }
+
+    get chartLabels(): Label[] {
+        return this.BarChartLabels;
+    }
+
+    @Input() set chartData(value: number[]) {
+        if (this.barChartData.length && value) {
+            this.barChartData[0].data = value;
+        }
+    }
+
     public barChartOptions: ChartOptions = {
         responsive: true,
-        // We use these empty structures as placeholders for dynamic theming.
         scales: {xAxes: [{}], yAxes: [{}]},
         plugins: {
             datalabels: {
@@ -21,7 +36,7 @@ export class WeightBarChartDialogComponent implements OnInit {
             }
         }
     };
-    public barChartLabels: Label[] = ['1', '2', '3', '4'];
+    // public barChartLabels: Label[] = ['1', '2', '3', '4'];
     public barChartType: ChartType = 'bar';
     public barChartLegend = true;
     public barChartPlugins = [pluginDataLabels];

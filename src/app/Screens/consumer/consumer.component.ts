@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {ConsumerFormDialogComponent} from "../../Components/consumer-form-dialog/consumer-form-dialog.component";
-import {MatDialog} from "@angular/material/dialog";
+import {ConsumerFormDialogComponent} from '../../Components/consumer-form-dialog/consumer-form-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
+import {ConsumerService} from '../../Services/consumer.service';
+import {Consumer} from '../../Models/consumer';
 
 @Component({
     selector: 'app-consumer',
@@ -9,32 +11,70 @@ import {MatDialog} from "@angular/material/dialog";
 })
 export class ConsumerComponent implements OnInit {
 
-    constructor(public dialog: MatDialog) {
+    public consumers: Consumer[];
+    public today: Date = new Date();
+
+    constructor(public dialog: MatDialog,
+                private consumerService: ConsumerService) {
     }
 
     ngOnInit(): void {
+        this.fetchConsumer();
     }
 
     openDialog(): void {
+        const consumer = new Consumer();
+        consumer.no = this.consumers.length + 1;
         const dialogRef = this.dialog.open(ConsumerFormDialogComponent, {
             width: '300px',
-            data: {id: 1, capacity: 110}
+            data: consumer
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog was closed', result);
+            this.createConsumer(result);
         });
     }
 
-    updateDialog(id: number): void {
+    updateDialog(consumer: Consumer): void {
         const dialogRef = this.dialog.open(ConsumerFormDialogComponent, {
             width: '300px',
-            data: {id: id, capacity: 120}
+            data: consumer
         });
 
         dialogRef.afterClosed().subscribe(result => {
-            console.log('The dialog update was closed', result);
+            if (typeof result === 'object') {
+                this.updateConsumer(result);
+            } else if (typeof result === 'number') {
+                this.deleteConsumer(result);
+            }
         });
     }
 
+    private fetchConsumer(): void {
+        this.consumerService.fetch().subscribe(res => {
+            this.consumerService.setConsumers(res);
+            this.consumers = this.consumerService.getConsumerByDate();
+        });
+    }
+
+    private createConsumer(data): void {
+        this.consumerService.create(data).subscribe(newConsumer => {
+            this.consumerService.addConsumer(newConsumer);
+            this.consumers = this.consumerService.getConsumerByDate();
+        });
+    }
+
+    private updateConsumer(data): void {
+        this.consumerService.update(data).subscribe(updatedConsumer => {
+            this.consumerService.updateConsumer(updatedConsumer);
+            this.consumers = this.consumerService.getConsumerByDate();
+        });
+    }
+
+    private deleteConsumer(selectedId: number): void {
+        this.consumerService.delete(selectedId).subscribe(res => {
+            this.consumerService.deleteConsumer(selectedId);
+            this.consumers = this.consumerService.getConsumerByDate();
+        });
+    }
 }

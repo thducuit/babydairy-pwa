@@ -5,6 +5,8 @@ import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 export interface ConsumerFormDialogComponentData {
     id: number;
     capacity: string;
+    no: number;
+    isEmpty?: number;
 }
 
 @Component({
