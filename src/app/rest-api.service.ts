@@ -43,9 +43,16 @@ export class RestApiService {
         );
     }
 
-    public delete<T>(url: string): Observable<T> {
+    public delete<T>(url: string, params = []): Observable<T> {
+        const httpOptions = {
+            headers: new HttpHeaders({
+                'Content-Type': 'application/json'
+            }),
+            body: params
+        };
         return this.http.delete<T>(
-            this.getEndpoint(url)
+            this.getEndpoint(url),
+            httpOptions
         );
     }
 }

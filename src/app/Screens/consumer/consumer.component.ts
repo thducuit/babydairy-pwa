@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ConsumerFormDialogComponent} from '../../Components/consumer-form-dialog/consumer-form-dialog.component';
 import {MatDialog} from '@angular/material/dialog';
 import {ConsumerService} from '../../Services/consumer.service';
-import {Consumer} from '../../Models/consumer';
+import {Consumer, ConsumerConstant} from '../../Models/consumer';
+import {OnlineOfflineService} from '../../Services/online-offline.service';
 
 @Component({
     selector: 'app-consumer',
@@ -11,11 +12,13 @@ import {Consumer} from '../../Models/consumer';
 })
 export class ConsumerComponent implements OnInit {
 
-    public consumers: Consumer[];
+    public consumers: Consumer[] = [];
     public today: Date = new Date();
 
     constructor(public dialog: MatDialog,
-                private consumerService: ConsumerService) {
+                private consumerService: ConsumerService,
+                private onlineOfflineService: OnlineOfflineService) {
+        this.registerOnlineOfflineEvents(onlineOfflineService);
     }
 
     ngOnInit(): void {
@@ -51,30 +54,93 @@ export class ConsumerComponent implements OnInit {
     }
 
     private fetchConsumer(): void {
-        this.consumerService.fetch().subscribe(res => {
-            this.consumerService.setConsumers(res);
-            this.consumers = this.consumerService.getConsumerByDate();
-        });
+        if (this.onlineOfflineService.isOnline) {
+            this.consumerService.fetch().subscribe(res => {
+                this.consumers = this.consumerService
+                        .setConsumers(res)
+                        .getConsumerByDate();
+                this.consumerService.updateToLocalDb();
+            });
+        } else {
+            this.consumerService.fetchFromIndexedDb().subscribe(res => {
+                this.consumers = this.consumerService
+                        .setConsumers(res)
+                        .getConsumerByDate();
+            });
+        }
     }
 
     private createConsumer(data): void {
-        this.consumerService.create(data).subscribe(newConsumer => {
-            this.consumerService.addConsumer(newConsumer);
-            this.consumers = this.consumerService.getConsumerByDate();
-        });
+        if (this.onlineOfflineService.isOnline) {
+            this.consumerService.create(data).subscribe(newConsumer => {
+                this.consumers = this.consumerService
+                        .addConsumer(newConsumer)
+                        .getConsumerByDate();
+                this.consumerService.updateToLocalDb('add', newConsumer);
+            });
+        } else {
+            this.consumerService.createToIndexedDb(data).subscribe(newConsumer => {
+                this.consumers = this.consumerService
+                        .addConsumer(newConsumer)
+                        .getConsumerByDate();
+            });
+        }
     }
 
     private updateConsumer(data): void {
-        this.consumerService.update(data).subscribe(updatedConsumer => {
-            this.consumerService.updateConsumer(updatedConsumer);
-            this.consumers = this.consumerService.getConsumerByDate();
-        });
+        if (this.onlineOfflineService.isOnline) {
+            this.consumerService.update(data).subscribe(updatedConsumer => {
+                this.consumers = this.consumerService
+                        .updateConsumer(updatedConsumer)
+                        .getConsumerByDate();
+                this.consumerService.updateToLocalDb('edit', updatedConsumer);
+            });
+        } else {
+            data.version = this.consumerService.isCreatedByLocal(data) ? ConsumerConstant.NEW_FROM_LOCAL : ConsumerConstant.UPDATE;
+            this.consumerService.updateToIndexedDb(data).subscribe(updatedConsumer => {
+                this.consumers = this.consumerService
+                        .updateConsumer(updatedConsumer)
+                        .getConsumerByDate();
+            });
+        }
     }
 
     private deleteConsumer(selectedId: number): void {
-        this.consumerService.delete(selectedId).subscribe(res => {
-            this.consumerService.deleteConsumer(selectedId);
-            this.consumers = this.consumerService.getConsumerByDate();
+        if (this.onlineOfflineService.isOnline) {
+            this.consumerService.delete(selectedId).subscribe(res => {
+                this.consumers = this.consumerService
+                        .deleteConsumer(selectedId)
+                        .getConsumerByDate();
+                this.consumerService.updateToLocalDb('delete', selectedId);
+            });
+        } else {
+            const consumer = this.consumerService.getById(selectedId);
+            if (consumer.version === ConsumerConstant.NEW_FROM_LOCAL) {
+                this.consumerService.deleteFromIndexedDb(selectedId).subscribe(() => {
+                    this.consumers = this.consumerService
+                        .deleteConsumer(selectedId)
+                        .getConsumerByDate();
+                });
+            } else {
+                consumer.version = ConsumerConstant.DELETE;
+                this.consumerService.updateToIndexedDb(consumer).subscribe(updatedConsumer => {
+                    this.consumers = this.consumerService
+                                        .updateConsumer(consumer)
+                                        .getConsumerByDate();
+                });
+            }
+        }
+    }
+
+    private registerOnlineOfflineEvents(onlineOfflineService: OnlineOfflineService): void {
+        onlineOfflineService.connectionChanged.subscribe(online => {
+            if (online) {
+                this.consumerService.syncToOnline().subscribe(res => {
+                    console.log('res', res);
+                });
+            } else {
+                console.log('went offline, storing in indexdb');
+            }
         });
     }
 }
