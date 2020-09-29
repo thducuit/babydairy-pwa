@@ -24,7 +24,7 @@ export class Consumer {
             this.id = obj.id;
             this.capacity = obj.capacity;
             this.no = obj.no;
-            this.version = obj.version || ConsumerConstant.NEW_FROM_API;
+            this.version = typeof obj.version === 'number' ? obj.version : ConsumerConstant.NEW_FROM_API;
             this.unit = obj.unit || 'ml';
             this.isEmpty = obj.is_empty === 1;
             this.created = obj.created_at || obj.created;

@@ -1,0 +1,38 @@
+<h1 mat-dialog-title>Thông tin bé theo tháng</h1>
+<div mat-dialog-content>
+    <mat-form-field class="month-form-field">
+        <mat-label>Tháng thứ</mat-label>
+        <input matInput type="text" [(ngModel)]="data.month">
+        <button mat-button *ngIf="data.month" matSuffix mat-icon-button aria-label="Clear" (click)="data.month=''">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+    <mat-form-field class="week-form-field">
+        <mat-label>Tuần thứ</mat-label>
+        <input matInput type="text" [(ngModel)]="data.week">
+        <button mat-button *ngIf="data.week" matSuffix mat-icon-button aria-label="Clear" (click)="data.week=''">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+    <mat-form-field class="height-form-field">
+        <mat-label>Chiều cao</mat-label>
+        <input matInput type="text" [(ngModel)]="data.height">
+        <button mat-button *ngIf="data.height" matSuffix mat-icon-button aria-label="Clear" (click)="data.height=''">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+    <mat-form-field class="weight-form-field">
+        <mat-label>Cân nặng</mat-label>
+        <input matInput type="text" [(ngModel)]="data.weight">
+        <button mat-button *ngIf="data.weight" matSuffix mat-icon-button aria-label="Clear" (click)="data.weight=''">
+            <mat-icon>close</mat-icon>
+        </button>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions>
+    <div class="flex-container row-reverse">
+        <button mat-button class="mat-primary" [mat-dialog-close]="data" (click)="update()">Cập nhật</button>
+        <button mat-button *ngIf="data.id" class="mat-warn" [mat-dialog-close]="data.id" (click)="update()">Xóa</button>
+    </div>
+
+</div>

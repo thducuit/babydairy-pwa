@@ -13,6 +13,7 @@ import {MatInputModule} from '@angular/material/input';
 import {MatRadioModule} from '@angular/material/radio';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatIconModule} from '@angular/material/icon';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
     imports: [
@@ -29,7 +30,8 @@ import {MatIconModule} from '@angular/material/icon';
         MatInputModule,
         MatRadioModule,
         MatDatepickerModule,
-        MatIconModule
+        MatIconModule,
+        MatSnackBarModule
     ],
     exports: [
         MatTableModule,
@@ -45,7 +47,8 @@ import {MatIconModule} from '@angular/material/icon';
         MatInputModule,
         MatRadioModule,
         MatDatepickerModule,
-        MatIconModule
+        MatIconModule,
+        MatSnackBarModule
     ]
 })
 

@@ -114,7 +114,7 @@ export class ConsumerService extends BaseService {
                     return con;
                 });
                 this.db.clear(this.table).then(() => {
-                    this.db.addByBulk<ConsumerDto[]>(this.table, consumerDtos).then(res => {
+                    this.db.addByBulk<ConsumerLocalDto[]>(this.table, consumerDtos).then(res => {
                         this.lastKey = +res;
                     });
                 });

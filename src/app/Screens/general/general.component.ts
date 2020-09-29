@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {BabyinfoService} from '../../Services/babyinfo.service';
+import {OnlineOfflineService} from '../../Services/online-offline.service';
+import {BabyInfosStore} from '../../Stores/baby-infos.store';
+import {GeneralService} from '../../Services/general.service';
 
 @Component({
     selector: 'app-general',
@@ -14,32 +16,47 @@ export class GeneralComponent implements OnInit {
     public weightLabels: [];
     public weightValues: [];
 
-    constructor(private babyinfoService: BabyinfoService) {
+    constructor(private generalService: GeneralService,
+                private babyinfoStore: BabyInfosStore,
+                private onlineOfflineService: OnlineOfflineService) {
+        this.registerOnlineOfflineEvents(onlineOfflineService);
     }
 
     ngOnInit(): void {
-        this.fetch();
+        this.fetchBabyInfos();
     }
 
-    private fetch(): void {
-        this.babyinfoService.fetch().subscribe(res => {
-            this.babyinfoService.setInfos(res);
-            this.updateLabelChart();
-            this.updateHeightValueChart();
-            this.updateWeightValueChart();
+    private fetchBabyInfos(): void {
+        this.babyinfoStore.state$.subscribe(res => {
+            this.generalService.setInfos(res.infos);
+            this.updateLabel();
         });
     }
 
+    private updateLabel(): void {
+        this.updateLabelChart();
+        this.updateHeightValueChart();
+        this.updateWeightValueChart();
+    }
+
     private updateLabelChart(): void {
-        this.heightLabels = this.weightLabels = this.babyinfoService.getLabelByKey('month');
+        this.heightLabels = this.weightLabels = this.generalService.getLabelByKey('month');
     }
 
     private updateHeightValueChart(): void {
-        this.heightValues = this.babyinfoService.getLabelByKey('height');
+        this.heightValues = this.generalService.getLabelByKey('height');
     }
 
     private updateWeightValueChart(): void {
-        this.weightValues = this.babyinfoService.getLabelByKey('weight');
+        this.weightValues = this.generalService.getLabelByKey('weight');
+    }
+
+    private registerOnlineOfflineEvents(onlineOfflineService: OnlineOfflineService): void {
+        onlineOfflineService.connectionChanged.subscribe(online => {
+            if (online) {
+            } else {
+            }
+        });
     }
 
 }

@@ -20,6 +20,7 @@ export class DbLocalService {
         this.db.version(this.version).stores({
             consumers: '++id, capacity, no, unit, is_empty, version, date, time, created, updated',
             producers: '++id, capacity, no, unit, version, date, time, created, updated',
+            babyinfos: '++id, weight, height, month, week, created, updated, version'
         });
     }
 

@@ -1,0 +1,28 @@
+<mat-card class="mat-card-info">
+    <mat-card-header>
+        <mat-card-title>Thông tin bé</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+        <mat-selection-list #tracking [multiple]="false">
+
+            <mat-list-option [value]="info.id"  *ngFor="let info of infos" (click)="updateDialog(info)">
+                <img matListAvatar src="../../../assets/b2.png" alt="" class="consumer-avatar" />
+                <h3 matLine> Tháng {{ info.month }} </h3>
+                <h3 matLine> Tuần {{ info.week }} </h3>
+                <p matLine>
+                    <span> Chiều cao: {{ info.height }}cm </span>
+                </p>
+                <p matLine>
+                    <span> Cân nặng: {{ info.weight }}kg </span>
+                </p>
+                <mat-divider [inset]="true"></mat-divider>
+            </mat-list-option>
+
+        </mat-selection-list>
+    </mat-card-content>
+    <mat-card-actions>
+        <div class="flex-container row-reverse">
+            <button mat-button color="primary" (click)="openDialog()" > Thêm mới </button>
+        </div>
+    </mat-card-actions>
+</mat-card>

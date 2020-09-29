@@ -29,6 +29,10 @@ import {AvatarUploadDialogComponent} from './Components/avatar-upload-dialog/ava
 import {ConsumerService} from './Services/consumer.service';
 import {ProducerService} from './Services/producer.service';
 import {BabyinfoService} from './Services/babyinfo.service';
+import {TrackingComponent} from './Screens/tracking/tracking.component';
+import {InfoFormDialogComponent} from './Components/info-form-dialog/info-form-dialog.component';
+import {BabyInfosStore} from './Stores/baby-infos.store';
+import {GeneralService} from './Services/general.service';
 
 @NgModule({
     declarations: [
@@ -40,12 +44,14 @@ import {BabyinfoService} from './Services/babyinfo.service';
         HeightBarChartDialogComponent,
         WeightBarChartDialogComponent,
         AvatarUploadDialogComponent,
+        InfoFormDialogComponent,
 
         // Screens
         InfoTodayComponent,
         ProducerComponent,
         ConsumerComponent,
-        GeneralComponent
+        GeneralComponent,
+        TrackingComponent
     ],
     imports: [
         BrowserModule,
@@ -62,7 +68,11 @@ import {BabyinfoService} from './Services/babyinfo.service';
         // Services
         ConsumerService,
         ProducerService,
-        BabyinfoService
+        BabyinfoService,
+        GeneralService,
+
+        // Stores
+        BabyInfosStore
     ],
     bootstrap: [AppComponent]
 })
