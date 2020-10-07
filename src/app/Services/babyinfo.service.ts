@@ -34,8 +34,10 @@ export class BabyinfoService extends BaseService {
 
     private lastKey: number;
 
-    constructor(private http: RestApiService,
-                private db: DbLocalService) {
+    constructor(
+                private http: RestApiService,
+                private db: DbLocalService
+    ) {
         super();
     }
 

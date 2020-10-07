@@ -33,6 +33,14 @@ import {TrackingComponent} from './Screens/tracking/tracking.component';
 import {InfoFormDialogComponent} from './Components/info-form-dialog/info-form-dialog.component';
 import {BabyInfosStore} from './Stores/baby-infos.store';
 import {GeneralService} from './Services/general.service';
+import {AppRoutingModule} from './app-routing.module';
+import {HomeContainerComponent} from './Containers/home-container/home-container.component';
+import {LoginContainerComponent} from './Containers/login-container/login-container.component';
+import {AuthService} from './Services/auth.service';
+import {TokenInterceptor} from './token.interceptor';
+
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import {JwtInterceptor} from './jwt.interceptor';
 
 @NgModule({
     declarations: [
@@ -45,6 +53,9 @@ import {GeneralService} from './Services/general.service';
         WeightBarChartDialogComponent,
         AvatarUploadDialogComponent,
         InfoFormDialogComponent,
+
+        HomeContainerComponent,
+        LoginContainerComponent,
 
         // Screens
         InfoTodayComponent,
@@ -62,6 +73,7 @@ import {GeneralService} from './Services/general.service';
         ReactiveFormsModule,
         MatNativeDateModule,
         ChartsModule,
+        AppRoutingModule,
         ServiceWorkerModule.register('ngsw-worker.js', {enabled: environment.production})
     ],
     providers: [
@@ -70,9 +82,20 @@ import {GeneralService} from './Services/general.service';
         ProducerService,
         BabyinfoService,
         GeneralService,
+        AuthService,
 
         // Stores
-        BabyInfosStore
+        BabyInfosStore,
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: TokenInterceptor,
+            multi: true
+        },
+        {
+            provide: HTTP_INTERCEPTORS,
+            useClass: JwtInterceptor,
+            multi: true
+        }
     ],
     bootstrap: [AppComponent]
 })

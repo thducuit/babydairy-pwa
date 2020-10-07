@@ -1,0 +1,23 @@
+<div class="auth-area">
+    <form [formGroup]="form">
+        <div mat-dialog-content>
+            <p>
+                <mat-form-field class="month-form-field">
+                    <mat-label>Email</mat-label>
+                    <input matInput type="text" formControlName="email"/>
+                </mat-form-field>
+            </p>
+            <p>
+                <mat-form-field class="week-form-field">
+                    <mat-label>Mật khẩu</mat-label>
+                    <input matInput type="password" formControlName="password" />
+                </mat-form-field>
+            </p>
+        </div>
+        <div mat-dialog-actions>
+            <div class="flex-container row-reverse">
+                <button mat-button class="mat-primary" (click)="login()">Đăng nhập</button>
+            </div>
+        </div>
+    </form>
+</div>
